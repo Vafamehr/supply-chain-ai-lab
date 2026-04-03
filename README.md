@@ -1,94 +1,130 @@
 # Supply Chain AI Lab
 
-A modular supply chain decision system that simulates demand, evaluates inventory, generates replenishment decisions, and analyzes risk under different scenarios.
+## What this is
+
+An end-to-end supply chain decision system that simulates how real-world planning systems operate.
+
+This project goes beyond modeling and focuses on how data, models, and deterministic logic come together to drive operational decisions.
 
 ---
 
-## Overview
+## Problem
 
-This project implements a deterministic supply chain pipeline with layered extensions for simulation, scenario analysis, and interpretation.
+In real supply chains, decisions are not just predictions.
 
-Core flow:
+We need to:
 
-Forecast → Inventory → Replenishment → Decision Coordinator  
-→ Simulation → Scenario Analysis → Decision Intelligence → LLM Explanation
-
-The system reflects how real supply chain decisions are produced, evaluated, and interpreted in practice.
-
----
-
-## What the System Does
-
-For a given SKU and location, the system:
-
-- predicts demand using a forecasting model  
-- evaluates inventory position and coverage  
-- determines reorder decisions and quantities  
-- simulates alternative scenarios (e.g., demand spikes, supplier delays)  
-- compares outcomes against a baseline  
-- classifies inventory state and dominant risk  
-- generates explanations grounded in structured outputs  
+* forecast demand
+* evaluate inventory health
+* decide how much to replenish
+* simulate scenarios under uncertainty
+* understand risks like stockouts and overstock
 
 ---
 
-## Architecture
+## System Overview
 
-### Decision Backbone
+The system follows a structured pipeline:
 
-- Forecasting  
-- Inventory  
-- Replenishment  
-- Decision Coordinator  
+Demand → Inventory → Replenishment → Decision → Simulation → Explanation
 
-### Simulation & Scenario Layer
+---
 
-- Simulation Engine  
-- Scenario Analysis  
-- Disruption Modeling  
+## Core Components
 
-### Network Extensions
+### Demand Forecasting
 
-- Allocation  
-- Monitoring  
+Predicts expected demand using historical signals.
 
-### Intelligence Layer
+### Inventory Evaluation
 
-- System Output Contract  
-- Decision Intelligence (deterministic classification)  
-- LLM Explanation Layer (optional, non-decision-making)  
+Computes current stock position and days of supply.
+
+### Replenishment Logic
+
+Determines how much to order based on demand and constraints.
+
+### Decision Coordinator
+
+Orchestrates modules and produces final decisions.
+
+### Scenario Simulation
+
+Evaluates decisions under different conditions (demand spikes, disruptions).
+
+### Disruption Modeling
+
+Injects shocks into the system (supply delays, demand changes).
+
+### Allocation
+
+Distributes inventory across locations.
+
+### Network Monitoring
+
+Tracks system-level health and risks.
+
+### LLM Explanation Layer
+
+Generates human-readable explanations of system decisions.
+LLM is used strictly for interpretation, not decision-making.
 
 ---
 
 ## Design Principles
 
-- Deterministic-first: all decisions are rule-based and reproducible  
-- Modular: each component has a clear and isolated responsibility  
-- Simulation-driven: decisions are evaluated under multiple scenarios  
-- Layered design: computation, interpretation, and explanation are separated  
-- Bounded LLM usage: explanations only, never decision-making  
+* Deterministic-first architecture
+* Clear separation between modules
+* Data → Model → Decision → Evaluation flow
+* LLM used only as an explanation layer
+* Traceable and interpretable outputs
 
 ---
 
-## Example Output
+## Why this matters
 
-Each scenario produces structured signals:
+Most projects stop at prediction.
 
-- reorder  
-- recommended_units  
-- days_of_supply  
-- stockout_risk  
-- delta_vs_baseline  
-- inventory_pressure  
+This system focuses on:
 
-These are further interpreted into:
-
-- inventory_state (UNDERSTOCK / BALANCED / OVERSTOCK)  
-- key_risk (SHORTAGE / EXCESS / HIDDEN / STABLE)  
+* how predictions translate into decisions
+* how decisions behave under scenarios
+* how to reason about tradeoffs in operations
 
 ---
 
 ## How to Run
 
 ```bash
-cd src
-python run_system.py
+python -m src.run_system
+```
+
+---
+
+## Repository Structure
+
+```text
+src/
+  demand_forecasting/
+  inventory/
+  replenishment/
+  decision_coordinator/
+  scenario_analysis/
+  simulation_engine/
+  disruption_modeling/
+  allocation/
+  network_monitoring/
+  decision_intelligence/
+  llm_support/
+  tools/
+
+docs/
+  knowledge/
+  architecture/
+```
+
+---
+
+## Summary
+
+A modular, deterministic supply chain system that demonstrates how real-world decision pipelines are designed, evaluated, and explained.
